@@ -13,6 +13,9 @@
             </div>
             <div class="card-body">
                 <form action="{% url 'register' %}" method="POST">
+
+                  {% csrf_token %}
+
                   <div class="form-group">
                   <label for="first_name">First Name</label>
                   <input type="text" name="first_name" class="form-control" required>
@@ -41,7 +44,7 @@
               </form>
             </div>
             <!-- Alerts -->
-            {% include partials/_alerts.html %}
+            {% include 'partials/_alerts.html' %}
           </div>
         </div>
       </div>

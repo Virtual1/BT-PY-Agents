@@ -15,17 +15,17 @@ def register(request):
         # Check if passwords match:
         if password == password2:
             # Check username:
-            if user.objects.filter(username=username).exists():
+            if User.objects.filter(username=username).exists():
                 messages.error(request, 'The username is taken')
                 return redirect('register')
             else:
                 # Check email:
-                if user.objects.filter(email=email).exists():
+                if User.objects.filter(email=email).exists():
                     messages.error(request, 'That emails is being used')
                     return redirect('register')
                 else:
                     # Looks good:
-                    user.objects.create_user(
+                    User.objects.create_user(
                         username=username, password=password, first_name=first_name, last_name=last_name, email=email)
                     messages.success(request, 'You are now logged in')
                 return redirect('index')
@@ -42,7 +42,7 @@ def login(request):
 
         user = auth.authenticate(username=username, password=password)
         if user is not None:
-            auth.login(request.user)
+            auth.login(request, user)
             messages.success(request, 'You are now logged in')
             return redirect('dashboard')
         else:
